@@ -1,11 +1,6 @@
-import glob
 
-import cv2
-path = "fairface/train/*.*"
-for file in glob.glob(path):
-  image_read = cv2.imread(file)
-  width = 680
-  height = 480
-  dim = (width, height)
-  resized = cv2.resize(image_read, dim, interpolation = cv2.INTER_AREA)
-  print(file)
+from deepface.DeepFace import extract_faces
+pred  = extract_faces("fairface/train/69470.jpg", \
+                        conf_thres = 0.005, detector_backend =  "retinaface", \
+                        align = False, enforce_detection= False)
+print(pred[0]['confidence'])

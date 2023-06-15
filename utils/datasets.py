@@ -119,7 +119,7 @@ class _RepeatSampler(object):
 
 
 class LoadImages:  # for inference
-    def __init__(self, path, img_1=640, img_2 = 640):
+    def __init__(self, path, img_h=640, img_w = 640):
         p = str(Path(path))  # os-agnostic
         p = os.path.relpath(p)  # relative path
         if '*' in p:
@@ -135,8 +135,8 @@ class LoadImages:  # for inference
         videos = [x for x in files if x.split('.')[-1].lower() in vid_formats]
         ni, nv = len(images), len(videos)
 
-        self.h = img_1
-        self.w = img_2
+        self.h = img_h
+        self.w = img_w
         self.files = images + videos
         self.nf = ni + nv  # number of files
         self.video_flag = [False] * ni + [True] * nv

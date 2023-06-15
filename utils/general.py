@@ -86,12 +86,13 @@ def check_requirements(file='requirements.txt'):
     pkg_resources.require(requirements)  # DistributionNotFound or VersionConflict exception if requirements not met
 
 
-def check_img_size(img_size, s=32):
+def check_img_size(img_h, img_w, s=32):
     # Verify img_size is a multiple of stride s
-    new_size = make_divisible(img_size, int(s))  # ceil gs-multiple
-    if new_size != img_size:
-        print('WARNING: --img-size %g must be multiple of max stride %g, updating to %g' % (img_size, s, new_size))
-    return new_size
+    new_size1 = make_divisible(img_h, int(s))  # ceil gs-multiple
+    new_size2 = make_divisible(img_w, int(s))
+    if new_size1 != img_h or new_size2 != img_w:
+        print('WARNING:   must be multiple of max stride , updating to ')
+    return img_h,img_w
 
 
 def check_file(file):

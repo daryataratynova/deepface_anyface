@@ -69,10 +69,10 @@ def gen_csv(param, models):
          
           undetected_number_train.insert(i, model, number_train[0])
           undetected_number_val.insert(i, model, number_val[0])
-          # ratio_train = ratio(undetected_train, train)
-          # ratio_val = ratio(undetected_val, val)
-          # undetected_percentage_train = undetected_percentage_train.append({model : ratio_train}, ignore_index =True)
-          # undetected_percentage_val = undetected_percentage_val.append({model : ratio_val}, ignore_index = True)
+          ratio_train = ratio(undetected_train, train)
+          ratio_val = ratio(undetected_val, val)
+          undetected_percentage_train = undetected_percentage_train.append({model : ratio_train}, ignore_index =True)
+          undetected_percentage_val = undetected_percentage_val.append({model : ratio_val}, ignore_index = True)
 
           
           i+=1
@@ -81,16 +81,16 @@ def gen_csv(param, models):
      val_df.to_csv("results_csv/" + param + "_val.csv")
      undetected_number_train.to_csv("results_csv/" + param + "_number_train.csv")
      undetected_number_val.to_csv("results_csv/" + param + "_number_val.csv")
-     # undetected_percentage_train.to_csv("results_csv/" + "undetected_percentage_train.csv")
-     # undetected_percentage_val.to_csv("results_csv/" + "undetected_percentage_val.csv")
+     undetected_percentage_train.to_csv("results_csv/" + "undetected_percentage_train.csv")
+     undetected_percentage_val.to_csv("results_csv/" + "undetected_percentage_val.csv")
 if __name__ == '__main__':
      columns = ["age", "gender", "race"]
-     models = ["AnyFace", "Yolov5l", "retinaface", "opencv", "ssd", "mtcnn", "dlib" ]
+     models = [ "retinaface" ]
      #, "Yolov5l", "retinaface", "opencv", "ssd", "mtcnn", "dlib"
      parser = argparse.ArgumentParser()
      parser.add_argument('--model_name', type=str, default = 'retinaface', help = 'model name')
      parser.add_argument('--stats_format', type=str, default = 'csv', help = 'model name')
-     parser.add_argument('--param', type = str, default = 'age', help = 'age, gender or race')
+     parser.add_argument('--param', type = str, default = 'race', help = 'age, gender or race')
      opt = parser.parse_args()
 
      gen_csv(opt.param, models)

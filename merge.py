@@ -29,7 +29,7 @@ def merge(model_name):
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model_name', type=str, default = 'dlib', help = 'model name')
+    parser.add_argument('--model_name', type=str, default = 'retinaface', help = 'model name')
     opt = parser.parse_args()
     
 

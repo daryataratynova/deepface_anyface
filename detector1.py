@@ -30,26 +30,21 @@ def load_model(weights, device):
  
 def detect(
     model,
-    source,
     device,
-    img_size,
-    conf_thres,
-    mode,
-    model_name,
+    img_h,
+    img_w,
+    conf_thres
 ):
     # Load model
     #img_size = 640
     iou_thres = 0.5
-    imgsz=(img_size, img_size)
-    
     
     # Dataloader
-    print('loading images', source)
-    dataset = LoadImages(source, img_size=imgsz)
+    print('fairface/train')
+    dataset = LoadImages("fairface/train", img_h, img_w)
     bs = 1  # batch_size
-    
     for path, im, im0s, vid_cap in dataset:
-        
+    
         if len(im.shape) == 4:
             orgimg = np.squeeze(im.transpose(0, 2, 3, 1), axis= 0)
         else:
@@ -58,15 +53,16 @@ def detect(
         orgimg = cv2.cvtColor(orgimg, cv2.COLOR_BGR2RGB)
         img0 = copy.deepcopy(orgimg)
         h0, w0 = orgimg.shape[:2]  # orig hw
-        r = img_size / max(h0, w0)  # resize image to img_size
-        if r != 1:  # always resize down, only resize up if training with augmentation
-            interp = cv2.INTER_AREA if r < 1  else cv2.INTER_LINEAR
-            img0 = cv2.resize(img0, (int(w0 * r), int(h0 * r)), interpolation=interp)
+        r_h = img_h/ h0
+        r_w = img_w/ w0  # resize image to img_size
+        
+        if (r_h and r_w) != 1:  # always resize down, only resize up if training with augmentation
+            interp = cv2.INTER_AREA if (r_h or r_w) < 1  else cv2.INTER_LINEAR
+            img0 = cv2.resize(img0, (int(w0 * r_w), int(h0 * r_h)), interpolation=interp)
 
-        imgsz = check_img_size(img_size, s=model.stride.max())  # check img_size
-
-        img = letterbox(img0, new_shape=imgsz)[0]
-        # Convert from w,h,c to c,w,h
+        imgsz = check_img_size(img_h, img_w, s=model.stride.max())  # check img_size
+        img = letterbox(img0, new_shape=(img_w, img_h))[0]
+        # Convert from w,h,c to c,w,hß
         img = img.transpose(2, 0, 1).copy()
 
         img = torch.from_numpy(img).to(device)
@@ -82,39 +78,21 @@ def detect(
             found = False 
         else: 
             found = True
-        
-        #If model didn't find a face on image then we save it to csv file
-        if (found == False): 
-            if mode == "train":
-                file  = "fairface/"+ model_name+"/conf_thres="+ str(conf_thres) + "/train_undetected.csv"
-                file_exists = os.path.isfile(file)
-            else:
-                file  = "fairface/" + model_name + "/conf_thres="+ str(conf_thres) + "/val_undetected.csv"
-                file_exists = os.path.isfile(file)
-
-            with open (file, 'a') as csvfile:
-                headers = ['file']
-                writer = csv.DictWriter(csvfile, delimiter=',', lineterminator='\n',fieldnames=headers)
-
-                if not file_exists:
-                    writer.writeheader()
-
-                writer.writerow({'file': path})
+        print(found)
                         
 
 
 if __name__ == '__main__':
     
     parser = argparse.ArgumentParser()
-    parser.add_argument('--mode', nargs='+', type=str, default='val', help='val or train dataset')
-    parser.add_argument('--weights', nargs='+', type=str, default='weights/.pt', help='model.pt path(s)')
-    parser.add_argument('--source', type=str, default='fairface/val', help='source train or val')  # file/folder
+    parser.add_argument('--weights', nargs='+', type=str, default='weights/yolov5l_visual.pt', help='model.pt path(s)')
     parser.add_argument('--model_name', type= str, default= 'AnyFace', help= "model name needed for choosing a folder where to save")
-    parser.add_argument('--img-size', type=int, default=640, help='inference size (pixesls)')
+    parser.add_argument('--h', type = int, default= 480)
+    parser.add_argument('--w', type = int, default= 640)
     parser.add_argument('--conf_thres', type=float, default=0.5, help='confidence thr')
     opt = parser.parse_args()
     
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     model = load_model(opt.weights, device)
-    detect(model, opt.source, device, opt.img_size, opt.conf_thres, mode, model_name)
+    detect(model, device, opt.h, opt.w, opt.conf_thres)
