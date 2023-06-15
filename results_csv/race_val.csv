@@ -1,8 +1,8 @@
-,race,retinaface
-0,Black,14.15
-1,East Asian,13.78
-2,Indian,13.68
-3,Latino_Hispanic,14.83
-4,Middle Eastern,15.19
-5,Southeast Asian,14.61
-6,White,13.76
+,race,retinaface,opencv,ssd,mtcnn,dlib
+0,Black,14.15,14.86,20.23,16.8,14.18
+1,East Asian,13.78,13.82,10.98,12.07,13.93
+2,Indian,13.68,13.84,15.95,11.02,14.14
+3,Latino_Hispanic,14.83,13.99,13.06,12.86,14.28
+4,Middle Eastern,15.17,14.99,14.68,15.49,15.13
+5,Southeast Asian,14.61,14.19,9.6,10.76,14.12
+6,White,13.78,14.32,15.49,21.0,14.22

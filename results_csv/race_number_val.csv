@@ -1,8 +1,8 @@
-,race,retinaface
-0,East Asian,566
-1,Middle Eastern,624
-2,White,565
-3,Indian,562
-4,Latino_Hispanic,609
-5,Southeast Asian,600
-6,Black,581
+,race,retinaface,opencv,ssd,mtcnn,dlib
+0,East Asian,566,636,138,46,719
+1,Middle Eastern,623,690,127,59,781
+2,White,566,659,95,49,734
+3,Indian,562,637,83,41,730
+4,Latino_Hispanic,609,644,175,64,737
+5,Southeast Asian,600,653,134,80,729
+6,Black,581,684,113,42,732
