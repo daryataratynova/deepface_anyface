@@ -60,12 +60,13 @@ def detect(
     model_name,
     weights
 ):
+    os.environ['CUDA_LAUNCH_BLOCKING']='1'
     iou_thres = 0.
     data_folders = ['fairface/train/*.*', 'fairface/val/*.*']
 
     for path in data_folders:
 
-            device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+            device = torch.device("cpu")
             model = load_model(weights, device)
 
             for image_path in glob.glob(path):
@@ -75,7 +76,7 @@ def detect(
 
                 resized = resized.transpose(2, 0, 1).copy()
 
-                resized = torch.from_numpy(resized)
+                resized = torch.from_numpy(resized).to(device)
                 resized = resized.float()  # uint8 to fp16/32
                 resized /= 255.0  # 0 - 255 to 0.0 - 1.0
                 if resized.ndimension() == 3:

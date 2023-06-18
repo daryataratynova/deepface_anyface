@@ -12,12 +12,13 @@ if __name__ == '__main__':
     parser.add_argument('--h', type=int, default=480, help='inference size (pixesls)')
     parser.add_argument('--conf_thres', type=float, default=0.5, help='confidence threshold, 0 if not required')
     parser.add_argument('--models', type = str, nargs = '+')
+    parser.add_argument('--model_name', type =str, default = 'yolov5l')
     parser.add_argument('--deepface', type = int, default = 1) # 0 false, 1 true
     parser.add_argument('--weights', type = str) # 0 false, 1 true
     opt = parser.parse_args()
 
     if opt.deepface == 0:
-        detect(opt.w, opt.h, opt.conf_thres, opt.models, opt.weights)
+        detect(opt.w, opt.h, opt.conf_thres, opt.model_name, opt.weights)
     elif opt.deepface == 1:
         deepface_detect(opt.w, opt.h, opt.conf_thres, opt.models)
 
