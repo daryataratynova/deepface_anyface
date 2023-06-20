@@ -19,7 +19,7 @@ def deepface_detect(
     confidence,
     models
 ):
-    data_folders = ['fairface/train/*.*', 'fairface/val/*.*']
+    data_folders = [ 'fairface/val/*.*', 'fairface/train/*.*']
 
     for path in data_folders:
         for model in models:
@@ -93,10 +93,10 @@ def detect(
 
                 if (found == False): #if model could not find a face then we save path
                     if  'train' in path:
-                            file  = "fairface/"+ model_name + "/train_undetected.csv"
+                            file  = "fairface/"+ model_name + "/train_undetected1280.csv"
                             file_exists = os.path.isfile(file)
                     else:
-                            file  = "fairface/" + model_name + "/val_undetected.csv"
+                            file  = "fairface/" + model_name + "/val_undetected1280.csv"
                             file_exists = os.path.isfile(file)
 
                     with open (file, 'a') as csvfile:
