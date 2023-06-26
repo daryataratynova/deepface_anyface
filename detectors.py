@@ -114,7 +114,7 @@ def detect(
     weights
 ):
     iou_thres = 0.5
-    data_folders = ['fairface/train/', 'fairface/val/']
+    data_folders = ['fairface/train/']
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = load_model(weights, device)
     imgsz=(img_size, img_size)
