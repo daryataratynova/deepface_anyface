@@ -15,10 +15,11 @@ if __name__ == '__main__':
     parser.add_argument('--model_name', type =str, default = 'yolov5l')
     parser.add_argument('--deepface', type = int, default = 1) # 0 false, 1 true
     parser.add_argument('--weights', type = str) # 0 false, 1 true
+    parser.add_argument('--img_size', type = int, default= 1240 )
     opt = parser.parse_args()
 
     if opt.deepface == 0:
-        detect(opt.w, opt.h, opt.conf_thres, opt.model_name, opt.weights)
+        detect(opt.img_size, opt.conf_thres, opt.model_name, opt.weights)
     elif opt.deepface == 1:
         deepface_detect(opt.w, opt.h, opt.conf_thres, opt.models)
 

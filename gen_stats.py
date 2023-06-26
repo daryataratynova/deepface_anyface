@@ -25,8 +25,8 @@ def read_files(model):
      val = val[(val['service_test'] == True)] 
 
      #read undetected faces 
-     undetected_train = pd.read_csv("fairface/"+ model + "/train_balanced.csv")
-     undetected_val = pd.read_csv("fairface/"+ model  + "/val_balanced.csv") 
+     undetected_train = pd.read_csv("fairface/"+ model + "/train_balanced1280.csv")
+     undetected_val = pd.read_csv("fairface/"+ model  + "/val_balanced1280.csv") 
 
      return undetected_train, train, undetected_val, val
 
@@ -85,12 +85,12 @@ def gen_csv(param, models):
      undetected_percentage_val.to_csv("results_csv/" + "undetected_percentage_val.csv")
 if __name__ == '__main__':
      columns = ["age", "gender", "race"]
-     models = [ "retinaface", "opencv", "ssd", "mtcnn", "dlib"]
+     models = [ "anyface"]
      #, "Yolov5l", "retinaface", "opencv", "ssd", "mtcnn", "dlib"
      parser = argparse.ArgumentParser()
      parser.add_argument('--model_name', type=str, default = 'retinaface', help = 'model name')
      parser.add_argument('--stats_format', type=str, default = 'csv', help = 'model name')
-     parser.add_argument('--param', type = str, default = 'age', help = 'age, gender or race')
+     parser.add_argument('--param', type = str, default = 'race', help = 'age, gender or race')
      opt = parser.parse_args()
 
      gen_csv(opt.param, models)
