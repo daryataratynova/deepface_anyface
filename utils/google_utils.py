@@ -17,10 +17,14 @@ def gsutil_getsize(url=''):
 
 
 def attempt_download(file, repo='ultralytics/yolov5'):
+    print(file, repo)
     # Attempt file download if does not exist
+    print('i am in attempt_download')
     file = Path(str(file).strip().replace("'", '').lower())
+    print(file)
 
     if not file.exists():
+        print('i am in not file.exists')
         try:
             response = requests.get(f'https://api.github.com/repos/{repo}/releases/latest').json()  # github api
             assets = [x['name'] for x in response['assets']]  # release assets, i.e. ['yolov5s.pt', 'yolov5m.pt', ...]

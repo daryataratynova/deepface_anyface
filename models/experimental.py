@@ -112,19 +112,23 @@ class Ensemble(nn.ModuleList):
 
 def attempt_load(weights, map_location=None):
     # Loads an ensemble of models weights=[a,b,c] or a single model weights=[a] or weights=a
+    print('i am in attempt load')
     model = Ensemble()
+    print('i am after ensemble')
     for w in weights if isinstance(weights, list) else [weights]:
         attempt_download(w)
+        print('attempt load is okay')
         model.append(torch.load(w, map_location=map_location)['model'].float().fuse().eval())  # load FP32 model
-
+    print('i am after for loop')
     # Compatibility updates
     for m in model.modules():
         if type(m) in [nn.Hardswish, nn.LeakyReLU, nn.ReLU, nn.ReLU6, nn.SiLU]:
             m.inplace = True  # pytorch 1.7.0 compatibility
         elif type(m) is Conv:
             m._non_persistent_buffers_set = set()  # pytorch 1.6.0 compatibility
-
+    print('i am after compitability')
     if len(model) == 1:
+        print('return')
         return model[-1]  # return model
     else:
         print('Ensemble created with %s\n' % weights)
