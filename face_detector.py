@@ -19,7 +19,9 @@ if __name__ == '__main__':
     opt = parser.parse_args()
 
     if opt.deepface == 0:
+        print("hi")
         detect(opt.img_size, opt.conf_thres, opt.model_name, opt.weights)
+        print("hi2")
     elif opt.deepface == 1:
         deepface_detect(opt.w, opt.h, opt.conf_thres, opt.models)
 

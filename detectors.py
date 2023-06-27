@@ -15,6 +15,7 @@ import numpy as np
 import copy
 
 def load_model(weights, device):
+    print('i am trying to load a model')
     model = attempt_load(weights, map_location=device)  # load FP32 model
     return model
 
@@ -113,15 +114,20 @@ def detect(
     model_name,
     weights
 ):
+    print('i am in detect 1')
     iou_thres = 0.5
+    print('i am going to read')
     data_folders = ['fairface/train/', 'fairface/val/']
+    print('i read folder')
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print('i have set device')
     model = load_model(weights, device)
+    print('i loaded model')
     imgsz=(img_size, img_size)
-    
+    print('i am in detector')
     for folder_path in data_folders:
         dataset = LoadImages(folder_path, img_size=imgsz)
-
+        print('i am in folder')
         for path, im, im0s, vid_cap in dataset:
             if len(im.shape) == 4:
                 orgimg = np.squeeze(im.transpose(0, 2, 3, 1), axis= 0)
@@ -182,15 +188,15 @@ def detect(
                 found = False 
             else: 
                 found = True
-
+            print(path)
             if (found == False): #if model could not find a face then we save path
                 if  'train' in path:
-                        file  = "fairface/"+ model_name + "/train_undetected.csv"
+                        file  = "fairface/"+ model_name+ '/' + str(confidence) + '_train_undetected' + str(img_size) + '.csv'
                         file_exists = os.path.isfile(file)
                 else:
-                        file  = "fairface/" + model_name + "/val_undetected.csv"
+                        file  = "fairface/" + model_name + '/'+ str(confidence) + '_val_undetected'+ str(img_size) +'.csv'
                         file_exists = os.path.isfile(file)
-
+                        print('i am writing in val')
                 with open (file, 'a') as csvfile:
                     headers = ['file']
                     writer = csv.DictWriter(csvfile, delimiter=',', lineterminator='\n',fieldnames=headers)
