@@ -116,13 +116,7 @@ def detect(
 ):
     print('i am in detect 1')
     iou_thres = 0.5
-<<<<<<< HEAD
     data_folders = ['fairface/train/']
-=======
-    print('i am going to read')
-    data_folders = ['fairface/train/', 'fairface/val/']
-    print('i read folder')
->>>>>>> a1b49331593a2690ebd76e80ae1074c5cc5abdf3
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print('i have set device')
     model = load_model(weights, device)
