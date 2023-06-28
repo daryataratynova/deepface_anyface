@@ -1,0 +1,3 @@
+gender,fairface/retinaface,fairface/opencv,fairface/dlib,fairface/ssd,fairface/mtcnn
+Female,16275,17263,9630,5868,2659
+Male,15512,18494,11459,7964,3034

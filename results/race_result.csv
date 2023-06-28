@@ -1,0 +1,8 @@
+race,fairface/retinaface,fairface/opencv,fairface/dlib,fairface/ssd,fairface/mtcnn
+Black,4468,5357,3740,2494,912
+East Asian,4638,5169,2870,1470,831
+Indian,4361,5012,2951,2248,603
+Latino_Hispanic,4657,5006,2809,1748,704
+Middle Eastern,4472,4969,2907,2248,815
+Southeast Asian,4595,5106,2772,1592,594
+White,4596,5138,3040,2032,1234
