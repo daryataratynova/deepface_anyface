@@ -96,10 +96,10 @@ def deepface_detect(
 
                 if (found == False): #if model could not find a face then we save path
                     if  'train' in path:
-                            file  = "fairface/"+ model + "/train_undetected.csv"
+                            file  = "fairface/"+ model + "/" +str(confidence)+ "_train_undetected" + str(img_w)+str(img_h)+".csv"
                             file_exists = os.path.isfile(file)
                     else:
-                            file  = "fairface/" + model + "/val_undetected.csv"
+                            file  = "fairface/" + model + "/"+ str(confidence)+ "_val_undetected"+str(img_w)+str(img_h)+".csv"
                             file_exists = os.path.isfile(file)
 
                     with open (file, 'a') as csvfile:
@@ -116,7 +116,7 @@ def detect(
 ):
     print('i am in detect 1')
     iou_thres = 0.5
-    data_folders = ['fairface/train/']
+    data_folders = ['fairface/val/']
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print('i have set device')
     model = load_model(weights, device)
