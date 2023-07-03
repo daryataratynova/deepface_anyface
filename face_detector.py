@@ -23,5 +23,6 @@ if __name__ == '__main__':
         detect(opt.img_size, opt.conf_thres, opt.model_name, opt.weights)
         print("hi2")
     elif opt.deepface == 1:
+        print("hi")
         deepface_detect(opt.w, opt.h, opt.conf_thres, opt.models)
 
